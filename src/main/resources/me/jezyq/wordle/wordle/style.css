@@ -1,0 +1,70 @@
+.root {
+    -fx-background-color: #121213;
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Nagłówek */
+.header-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: transparent transparent #3a3a3c transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* Pojedynczy kafelek na planszy */
+.tile {
+    -fx-min-width: 58px;
+    -fx-min-height: 58px;
+    -fx-max-width: 58px;
+    -fx-max-height: 58px;
+    -fx-alignment: center;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #3a3a3c;
+    -fx-border-width: 2px;
+    -fx-background-color: transparent;
+}
+
+/* Stany kafelków (będziemy je dynamicznie nadawać) */
+.tile-filled {
+    -fx-border-color: #565758;
+}
+
+.tile-correct {
+    -fx-background-color: #538d4e; /* Zielony */
+    -fx-border-color: #538d4e;
+}
+
+.tile-present {
+    -fx-background-color: #b59f3b; /* Żółty */
+    -fx-border-color: #b59f3b;
+}
+
+.tile-absent {
+    -fx-background-color: #3a3a3c; /* Ciemny szary */
+    -fx-border-color: #3a3a3c;
+}
+
+/* Przyciski klawiatury */
+.keyboard-key {
+    -fx-min-height: 56px;
+    -fx-min-width: 42px;
+    -fx-background-color: #818384;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.keyboard-key:hover {
+    -fx-background-color: #9a9b9c;
+}
+
+.keyboard-key-wide {
+    -fx-min-width: 65px;
+    -fx-font-size: 11px;
+}
