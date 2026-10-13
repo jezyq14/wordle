@@ -21,7 +21,7 @@ public class NytService {
 
     public String fetchDailyWord() throws Exception {
         LocalDate today = LocalDate.now();
-        String url = String.format("https://www.nytimes.com/svc/wordle/v2/%s.json", today);
+        String url = String.format("%s/%s.json", AppConfig.getServerUrl(), today);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
