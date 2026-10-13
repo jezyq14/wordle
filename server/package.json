@@ -1,4 +1,11 @@
 {
+	"name": "wordle-server",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx --env-file=.env watch src/index.ts",
+		"start": "tsx --env-file=.env src/index.ts"
+	},
 	"dependencies": {
 		"@google/generative-ai": "^0.24.1",
 		"@hono/node-server": "^2.1.5",
