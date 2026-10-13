@@ -4,12 +4,16 @@
 }
 
 .header-title {
-    -fx-font-size: 32px;
+    -fx-font-size: 42px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-border-color: transparent transparent #3a3a3c transparent;
-    -fx-border-width: 0 0 1px 0;
-    -fx-padding: 0 0 10px 0;
+}
+
+.game-header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
 }
 
 .tile {
@@ -97,4 +101,24 @@
     -fx-padding: 0;
     -fx-max-width: 0;
     -fx-max-height: 0;
+}
+
+.menu-button {
+    -fx-min-height: 50px;
+    -fx-background-color: #538d4e;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 25px;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #467a42;
+}
+
+.menu-button:disabled {
+    -fx-background-color: #3a3a3c;
+    -fx-text-fill: #818384;
+    -fx-cursor: default;
 }

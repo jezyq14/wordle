@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="me.jezyq.wordle.wordle.MenuController"
+      alignment="CENTER"
+      spacing="10"
+      stylesheets="@style.css">
+
+    <padding>
+        <Insets top="40" bottom="40" left="40" right="40"/>
+    </padding>
+
+    <Label text="WORDLE" styleClass="header-title" />
+    <Label text="6 szans na zgadnięcie 5 literowego słowa." style="-fx-text-fill: #818384; -fx-font-size: 14px;" />
+
+    <VBox spacing="12" alignment="CENTER" maxWidth="320">
+        <VBox.margin>
+            <Insets top="20" bottom="10"/>
+        </VBox.margin>
+
+        <!-- Daily Button -->
+        <Button fx:id="dailyButton"
+                text="Tryb Daily (NYT)"
+                styleClass="menu-button"
+                maxWidth="Infinity"
+                onAction="#onDailyClicked"/>
+
+        <!-- Unlimited Button -->
+        <Button text="Tryb Unlimited"
+                styleClass="menu-button"
+                maxWidth="Infinity"
+                onAction="#onUnlimitedClicked"/>
+    </VBox>
+
+    <Label fx:id="dailyStatusLabel"
+           style="-fx-text-fill: #b59f3b; -fx-font-size: 13px; -fx-font-weight: bold;" />
+
+</VBox>

@@ -1,7 +1,10 @@
 package me.jezyq.wordle.wordle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -9,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import javafx.geometry.Pos;
 
@@ -37,14 +41,19 @@ public class WordleController {
     private String targetWord;
     private boolean gameOver = false;
 
+    private boolean isDailyMode = false;
+    private final NytService nytService = new NytService();
+
+    private DailyGameState dailyState;
+
+    @FXML
+    private Label headerTitleLabel;
+
     @FXML
     public void initialize() {
         createBoard();
         createKeyboard();
         setupPhysicalKeyboard();
-
-        targetWord = wordService.getRandomTargetWord();
-        System.out.println("DEBUG Word: " + targetWord);
     }
 
     private void createBoard() {
@@ -149,7 +158,6 @@ public class WordleController {
         }
     }
 
-
     private void handleEnter() {
         if (gameOver) return;
 
@@ -186,18 +194,38 @@ public class WordleController {
             updateKeyboardKey(letter, status);
         }
 
+        if (isDailyMode && dailyState != null) {
+            dailyState.getGuesses().add(guess);
+        }
+
         if (guess.equals(targetWord)) {
-            showToast("Brawo! Odgadłeś hasło!");
+            showToast("Brawo! Odgadłeś słowo!");
             gameOver = true;
+            if (isDailyMode && dailyState != null) {
+                dailyState.setCompleted(true);
+                dailyState.setWon(true);
+                nytService.saveDailyState(dailyState);
+            }
             return;
         }
 
         currentRow++;
         currentCol = 0;
 
+        // Sprawdź przegraną (po 6 próbach)
         if (currentRow >= 6) {
-            showToast("Koniec gry! Hasło to: " + targetWord);
+            showToast("Koniec gry! Słowo to: " + targetWord);
             gameOver = true;
+            if (isDailyMode && dailyState != null) {
+                dailyState.setCompleted(true);
+                dailyState.setWon(false);
+                nytService.saveDailyState(dailyState);
+            }
+            return;
+        }
+
+        if (isDailyMode && dailyState != null) {
+            nytService.saveDailyState(dailyState);
         }
     }
 
@@ -226,5 +254,60 @@ public class WordleController {
                 .position(Pos.TOP_CENTER)
                 .hideAfter(javafx.util.Duration.seconds(1.8))
                 .show();
+    }
+
+    @FXML
+    private void onBackToMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) rootContainer.getScene().getWindow();
+            stage.setScene(new Scene(root, 520, 720));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setupGame(boolean isDaily, DailyGameState state) {
+        this.isDailyMode = isDaily;
+        this.dailyState = state;
+
+        headerTitleLabel.setText(isDaily ? "TRYB DAILY (NYT)" : "TRYB UNLIMITED");
+
+        if (isDaily && state != null) {
+            this.targetWord = state.getTargetWord();
+            restorePreviousGuesses(state.getGuesses());
+        } else {
+            this.targetWord = wordService.getRandomTargetWord();
+        }
+
+        System.out.println("DEBUG (" + (isDaily ? "DAILY" : "UNLIMITED") + "): " + targetWord);
+    }
+
+    private void restorePreviousGuesses(java.util.List<String> previousGuesses) {
+        for (String guess : previousGuesses) {
+            for (int col = 0; col < 5; col++) {
+                tiles[currentRow][col].setText(String.valueOf(guess.charAt(col)));
+            }
+
+            TileStatus[] evaluation = wordService.evaluateGuess(guess, targetWord);
+            for (int col = 0; col < 5; col++) {
+                Label tile = tiles[currentRow][col];
+                TileStatus status = evaluation[col];
+                String letter = String.valueOf(guess.charAt(col));
+
+                switch (status) {
+                    case CORRECT -> tile.getStyleClass().add("tile-correct");
+                    case PRESENT -> tile.getStyleClass().add("tile-present");
+                    case ABSENT -> tile.getStyleClass().add("tile-absent");
+                }
+                updateKeyboardKey(letter, status);
+            }
+
+            currentRow++;
+        }
+        currentCol = 0;
     }
 }

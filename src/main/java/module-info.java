@@ -1,4 +1,5 @@
 module me.jezyq.wordle.wordle {
+    requires java.net.http;
     requires javafx.controls;
     requires javafx.fxml;
     requires org.controlsfx.controls;
