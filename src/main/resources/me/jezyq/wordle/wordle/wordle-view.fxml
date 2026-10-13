@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="rootContainer"
+      fx:controller="me.jezyq.wordle.wordle.WordleController"
+      alignment="TOP_CENTER"
+      spacing="20"
+      stylesheets="@style.css">
+
+    <padding>
+        <Insets top="15" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <Label text="WORDLE" styleClass="header-title" maxWidth="Infinity" alignment="CENTER"/>
+
+    <GridPane fx:id="boardGrid" alignment="CENTER" hgap="5" vgap="5">
+        <VBox.margin>
+            <Insets top="10" bottom="15"/>
+        </VBox.margin>
+    </GridPane>
+
+    <VBox fx:id="keyboardContainer" alignment="CENTER" spacing="8" />
+
+</VBox>

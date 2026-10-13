@@ -3,7 +3,6 @@
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Nagłówek */
 .header-title {
     -fx-font-size: 32px;
     -fx-font-weight: bold;
@@ -13,7 +12,6 @@
     -fx-padding: 0 0 10px 0;
 }
 
-/* Pojedynczy kafelek na planszy */
 .tile {
     -fx-min-width: 58px;
     -fx-min-height: 58px;
@@ -28,27 +26,25 @@
     -fx-background-color: transparent;
 }
 
-/* Stany kafelków (będziemy je dynamicznie nadawać) */
 .tile-filled {
     -fx-border-color: #565758;
 }
 
 .tile-correct {
-    -fx-background-color: #538d4e; /* Zielony */
+    -fx-background-color: #538d4e;
     -fx-border-color: #538d4e;
 }
 
 .tile-present {
-    -fx-background-color: #b59f3b; /* Żółty */
+    -fx-background-color: #b59f3b;
     -fx-border-color: #b59f3b;
 }
 
 .tile-absent {
-    -fx-background-color: #3a3a3c; /* Ciemny szary */
+    -fx-background-color: #3a3a3c;
     -fx-border-color: #3a3a3c;
 }
 
-/* Przyciski klawiatury */
 .keyboard-key {
     -fx-min-height: 56px;
     -fx-min-width: 42px;
@@ -67,4 +63,38 @@
 .keyboard-key-wide {
     -fx-min-width: 65px;
     -fx-font-size: 11px;
+}
+
+.key-correct {
+    -fx-background-color: #538d4e !important;
+}
+
+.key-present {
+    -fx-background-color: #b59f3b !important;
+}
+
+.key-absent {
+    -fx-background-color: #3a3a3c !important;
+}
+
+.notification-bar > .pane {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 4px;
+    -fx-padding: 10px 16px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 10, 0, 0, 4);
+}
+
+.notification-bar .label {
+    -fx-text-fill: #121213 !important;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+.notification-bar .close-button {
+    -fx-opacity: 0;
+    -fx-padding: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
 }
