@@ -48,25 +48,27 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+val isWindows = System.getProperty("os.name").lowercase().contains("win")
+val iconPath = if (isWindows) "src/main/resources/icon.ico" else "src/main/resources/me/jezyq/wordle/wordle/icon.png"
+
 jlink {
     imageZip.set(layout.buildDirectory.file("distributions/app-${javafx.platform.classifier}.zip"))
-
-    // Zapewniamy dołączenie modułów bezpieczeństwa i kryptografii SSL
     options.set(listOf(
         "--strip-debug",
         "--no-header-files",
         "--no-man-pages",
-        "--bind-services" // WAŻNE: ładuje usługi kryptograficzne i magazyn certyfikatów
+        "--bind-services"
     ))
 
     launcher {
         name = "Wordle"
+        jvmArgs = listOf("-Djavafx.cachedir=\$APPDIR/cache")
     }
 
     jpackage {
         imageName = "Wordle"
         appVersion = "1.0.0"
         skipInstaller = true
-        installerOptions = listOf("--win-console", "false")
+        imageOptions = listOf("--icon", iconPath)
     }
 }
