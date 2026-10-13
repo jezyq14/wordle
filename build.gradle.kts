@@ -49,9 +49,24 @@ tasks.withType<Test> {
 }
 
 jlink {
-    imageZip.set(layout.buildDirectory.file("/distributions/app-${javafx.platform.classifier}.zip"))
-    options.set(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
+    imageZip.set(layout.buildDirectory.file("distributions/app-${javafx.platform.classifier}.zip"))
+
+    // Zapewniamy dołączenie modułów bezpieczeństwa i kryptografii SSL
+    options.set(listOf(
+        "--strip-debug",
+        "--no-header-files",
+        "--no-man-pages",
+        "--bind-services" // WAŻNE: ładuje usługi kryptograficzne i magazyn certyfikatów
+    ))
+
     launcher {
-        name = "app"
+        name = "Wordle"
+    }
+
+    jpackage {
+        imageName = "Wordle"
+        appVersion = "1.0.0"
+        skipInstaller = true
+        installerOptions = listOf("--win-console", "false")
     }
 }
